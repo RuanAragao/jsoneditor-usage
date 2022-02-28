@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSONEditor</title>
+
+  <!-- Import CSS JSON Editor -->
+  <link href="node_modules/jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  
+  <div id="jsoneditor" style="width: 400px; height: 400px;"></div>
+
+  <div>
+    <button id="btnGetJson">Get JSON</button>
+  </div>
+  
+  <!-- Import JSON Editor -->
+  <script src="node_modules/jsoneditor/dist/jsoneditor.min.js"></script>
+
+  <!-- Settings -->
+  <script>
+    // BUILD ELEMENT
+    const container = document.getElementById("jsoneditor");
+    const options = {
+        mode: 'form'
+    };
+    const editor = new JSONEditor(container, options);
+
+    // JSON DATA FETCH API
+    let json;
+
+    fetch('https://jsonplaceholder.typicode.com/users/1')
+    .then(response => response.json())
+    .then(result => {
+      json = result;
+      editor.set(json);
+    })
+
+    // JSON SAMPLE
+    // const json = {
+    //     "Array": [1, 2, 3],
+    //     "Boolean": true,
+    //     "Null": null,
+    //     "Number": 123,
+    //     "Object": {"a": "b", "c": "d"},
+    //     "String": "Hello World"
+    // };
+
+    // SET DATA TO JSON EDITOR
+    // editor.set(json);
+
+    const btnGetJson = document.getElementById('btnGetJson');
+
+    btnGetJson.addEventListener("click", (e) => {
+      const jsonUpdated = editor.get();
+      console.log(jsonUpdated);
+    }, false);
+
+
+
+  </script>
+</body>
+</html>
